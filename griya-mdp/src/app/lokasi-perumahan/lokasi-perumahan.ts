@@ -26,19 +26,19 @@ export interface Housing {
 
 export class LokasiPerumahan {
   @Input() housing: Housing = { 
-    id: 1,
-      title: 'Griya Asri Residence',
-      location: 'Jakarta Selatan',
-      price: 850000000,
-      bedrooms: 3,
-      bathrooms: 2,
-      area: 120,
-      image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&h=400&fit=crop',
-      rating: 4.5,
-      status: 'Available',
-      type: 'rumah',
-      description: 'Hunian modern dengan desain minimalis di kawasan Jakarta Selatan yang strategis.',
-      postedDays: 2
+    id: 0,
+      title: '',
+      location: '',
+      price: 0,
+      bedrooms: 0,
+      bathrooms: 0,
+      area: 0,
+      image: '',
+      rating: 0,
+      status: '',
+      type: '',
+      description: '',
+      postedDays: 0
    };
 
   getStars(): number[] {
