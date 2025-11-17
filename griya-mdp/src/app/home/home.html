@@ -21,12 +21,68 @@
       <!-- Gambar Pada hero Section -->
       <div class="col-lg-6">
         <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop" 
-             alt="Perumahan Modern" 
-             class="img-fluid rounded shadow-lg">
+          alt="Perumahan Modern" 
+          class="img-fluid rounded shadow-lg">
       </div>
     </div>
   </div>
 </section>
+
+<!-- Pertengahan hero dan Header -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-12">
+                <h2 class="fw-bold mb-3">Mengapa Memilih Griya MDP?</h2>
+                <p class="text-muted">Kami memberikan yang terbaik untuk hunan impian Anda</p>
+            </div>
+        </div>
+        <div class="row g-3">
+            <!-- Feature Card 1 -->
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4">
+                    <div class="card-border">
+                        <div class="bg-primary rounded-circle d-inline-flex p-3 mb-2" >
+                            <i class="bi bi-geo-alt-fill text-white fs-1"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Lokasi Strategis</h5>
+                        <p class="card-text text-muted">
+                            Dekat dengan pusat kota, sekolah, rumah sakit, dan fasilitas umum lainnya
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4">
+                    <div class="card-border">
+                        <div class="bg-success rounded-circle d-inline-flex p-3 mb-2" >
+                            <i class="bi bi-shield-check text-white fs-1"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Lokasi Lengkap</h5>
+                        <p class="card-text text-muted">
+                            Dekat dengan pusat kota, sekolah, rumah sakit, dan fasilitas umum lainnya
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4">
+                    <div class="card-border">
+                        <div class="bg-warning  rounded-circle d-inline-flex p-3 mb-2" >
+                            <i class="i bi-cash-coin text-white fs-1"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Harga Terjangkau</h5>
+                        <p class="card-text text-muted">
+                            Dekat dengan pusat kota, sekolah, rumah sakit, dan fasilitas umum lainnya
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <!-- Properties Section -->
 <section id="properties" class="properties-section py-5">
@@ -58,8 +114,8 @@
         </button>
 
         <button class="btn btn-outline-primary me-2"
-          [class.active]="isFilterActive('apartment')"
-          (click)="filterByType('apartment')">
+          [class.active]="isFilterActive('appartement')"
+          (click)="filterByType('appartement')">
           <i class="bi bi-building me-2"></i>Appartement
         </button>
       </div>
