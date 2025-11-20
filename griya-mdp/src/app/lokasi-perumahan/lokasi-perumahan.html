@@ -3,9 +3,9 @@
       <!-- Property Image -->
       <div class="position-relative">
         <img [src]="housing.image" 
-            class="card-image-top"
-            alt="perumahan Modern"
-            style="height: 250px; object-fit: cover;" />
+             class="card-image-top"
+             [alt]="housing.title"
+             style="height: 250px; object-fit: cover;" />
       
       <!-- Badge Status -->
        <span class="position-absolute top-0 start-0 m-3 badge bg-success" [ngClass]="{'bg-success' : housing.status === 'Available'}">
@@ -48,8 +48,9 @@
     </p>
 
     <!-- Action Button -->
-    <div class="d-grid gap-2">
-      <a href="#" class="btn btn-primary">
+    <!-- <div class="d-grid gap-2"> -->
+    <div class="mt-auto">
+      <a [routerLink]="['/property', housing.id]" class="btn btn-primary w-100">
         <i class="bi bi-eye me-2"></i>Lihat Detail
       </a>
       <a href="#" class="btn btn-outline-primary">

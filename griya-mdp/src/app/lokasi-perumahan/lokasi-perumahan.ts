@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';  // <- Pastikan ada
 
 export interface Housing {
     id: number,
@@ -19,7 +20,7 @@ export interface Housing {
 
 @Component({
   selector:'app-lokasi-perumahan',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],  // <- RouterLink import
   templateUrl: './lokasi-perumahan.html',
   styleUrl: './lokasi-perumahan.css',
 })
