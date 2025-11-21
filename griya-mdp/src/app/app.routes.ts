@@ -4,7 +4,7 @@ import { Profile } from './profile/profile';
 import { Login } from './login/login';
 import { Register } from './register/register';
 import { Contact } from './contact/contact';
-import { Detail } from './detail/detail';
+import { Detail } from './detail/detail'; // <- Import detail Component
 
 export const routes: Routes = [
     //Mengatut Halaman Utama
