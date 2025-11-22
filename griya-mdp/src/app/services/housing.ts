@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Housing } from "../lokasi-perumahan/lokasi-perumahan";
+import { Housing } from "../lokasi-perumahan/housing.model";
 import { Observable } from "rxjs";
 
 

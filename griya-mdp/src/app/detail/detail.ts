@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Housing } from '../lokasi-perumahan/lokasi-perumahan';
+import { Housing } from '../lokasi-perumahan/housing.model';
 import { HOUSING_DATA } from '../data/housing-data';
 import { VoidExpression } from '@angular/compiler';
 import { defaultIfEmpty } from 'rxjs';

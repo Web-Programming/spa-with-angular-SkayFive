@@ -1,4 +1,4 @@
-import { Housing } from "../lokasi-perumahan/lokasi-perumahan";
+import { Housing } from "../lokasi-perumahan/housing.model";
 /**
  * Data properti/perumahan untuk aplikasi Griya MDP
  * 

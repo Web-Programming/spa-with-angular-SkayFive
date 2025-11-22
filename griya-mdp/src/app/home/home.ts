@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // <- Untuk Search
 import { LokasiPerumahan } from '../lokasi-perumahan/lokasi-perumahan';
-import { Housing } from '../lokasi-perumahan/lokasi-perumahan';
+import { Housing } from '../lokasi-perumahan/housing.model';
 import { HousingService } from '../services/housing'; // <- tambahkan import service
+import { CommonModule } from '@angular/common';
 // import { HOUSING_DATA } from '../data/housing-data';
-import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -17,18 +18,18 @@ export class Home implements OnInit {
   // Data arrays
   housingList: Housing[] = []; //Data dari backend
   filteredList: Housing[] = []; //Data setelah filter/search
-
-  //state management
-  isLoading: boolean = false; //Loading State
-  errorMessage: string = '';  //Error message
   selectedFilter: string = 'all'; //filter aktif
 
-  //Search
+   //Search
   searchQuery: string = ''; //Query pencarian
 
-  // pagination
-  currenPage: number = 1; //Halaman saat ini
+    // pagination
+  currentPage: number = 1; //Halaman saat ini
   itemsPerPage: number = 6; //Items per halaman
+
+  //Loading and erro state
+  isLoading: boolean = false; //Loading State
+  errorMessage: string = '';  //Error message
 
   // Fallback data (jika backend tidk tersedia)
   private fallbackData: Housing[] = [
@@ -242,9 +243,107 @@ export class Home implements OnInit {
     });
   }
 
+    filterByType(type: string) {
+    this.selectedFilter = type;
+    this.currentPage = 1; // Reset ke halaman pertama
+    this.isLoading = true;
+    this.errorMessage = '';
+    
+    if (type === 'all') {
+      // Load semua data dari backend
+      this.housingService.getAllHousing().subscribe({
+        next: (data) => {
+          this.housingList = data;
+          this.filteredList = data;
+          this.isLoading = false;
+          
+          // Terapkan search jika ada query
+          if (this.searchQuery) {
+            this.applySearch();
+          }
+        },
+        error: (err) => {
+          console.error('Error loading all housing data:', err);
+          // Fallback ke filter lokal
+          this.filteredList = [...this.housingList];
+          this.isLoading = false;
+          
+          // Terapkan search jika ada query
+          if (this.searchQuery) {
+            this.applySearch();
+          }
+        }
+      });
+    } else {
+      // Filter berdasarkan type dari backend
+      this.housingService.filterHousingByType(type).subscribe({
+        next: (data) => {
+          this.filteredList = data;
+          this.isLoading = false;
+          
+          // Terapkan search jika ada query
+          if (this.searchQuery) {
+            this.applySearch();
+          }
+        },
+        error: (err) => {
+          console.error('Error filtering housing by type:', err);
+          // Fallback ke filter lokal
+          this.filteredList = this.housingList.filter(h => h.type === type);
+          this.isLoading = false;
+          
+          // Terapkan search jika ada query
+          if (this.searchQuery) {
+            this.applySearch();
+          }
+        }
+      });
+    }
+  }
+
+  isFilterActive(type: string): boolean {
+    return this.selectedFilter === type;
+  }
+
+  // Method yang dipanggil saat user mengetik
+  searchHousing() {
+    this.currentPage = 1; // Reset ke halaman pertama
+    this.applySearch();
+  }
+
+  // Logic search sebenarnya
+  private applySearch() {
+    const query = this.searchQuery.toLowerCase().trim();
+    
+    // Jika search kosong, kembalikan ke filter saat ini
+    if (!query) {
+      this.filterByType(this.selectedFilter);
+      return;
+    }
+
+    // Base list berdasarkan filter
+    let baseList = this.selectedFilter === 'all' 
+      ? this.housingList 
+      : this.housingList.filter(h => h.type === this.selectedFilter);
+
+    // Apply search pada base list
+    this.filteredList = baseList.filter(house => 
+      house.title.toLowerCase().includes(query) ||
+      house.location.toLowerCase().includes(query) ||
+      house.description?.toLowerCase().includes(query) ||
+      house.status.toLowerCase().includes(query)
+    );
+  }
+
+  // Clear search
+  clearSearch() {
+    this.searchQuery = '';
+    this.filterByType(this.selectedFilter);
+  }
+
   //Pagination functionality
   get paginatedList(): Housing[] {
-    const start = (this.currenPage - 1) * this.itemsPerPage;
+    const start = (this.currentPage - 1) * this.itemsPerPage;
     return this.filteredList.slice(start, start + this.itemsPerPage);
   }
 
@@ -254,6 +353,35 @@ export class Home implements OnInit {
 
   get totalPagesArray(): number[] {
     return Array.from({ length: this.totalPages}, (_, i) => i + 1);
+  }
+
+  goToPage (page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      // Smooth scroll ke section
+      document.getElementById('properties')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  // Halaman berikutnya
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.goToPage(this.currentPage + 1);
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.goToPage(this.currentPage - 1);
+    }
+  }
+
+  get startIndex(): number {
+    return (this.currentPage - 1) * this.itemsPerPage + 1;
+  }
+
+  get endIndex(): number {
+    return Math.min(this.currentPage * this.itemsPerPage, this.filteredList.length);
   }
 }
 

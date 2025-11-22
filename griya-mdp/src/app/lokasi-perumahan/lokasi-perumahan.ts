@@ -1,26 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';  // <- Pastikan ada
-
-export interface Housing {
-    id: number,
-    title: string,
-    location: string,
-    price: number,
-    bedrooms: number,
-    bathrooms: number,
-    area: number,
-    image: string,
-    rating: number,
-    status: string,
-    type?: string,
-    description?: string,
-    postedDays?: number 
-}
+import { Housing } from './housing.model';
 
 @Component({
   selector:'app-lokasi-perumahan',
-  imports: [CommonModule, RouterLink],  // <- RouterLink import
+  imports: [CommonModule],  // <- RouterLink import
   templateUrl: './lokasi-perumahan.html',
   styleUrl: './lokasi-perumahan.css',
 })
