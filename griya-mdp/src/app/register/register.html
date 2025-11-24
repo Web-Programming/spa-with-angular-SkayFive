@@ -1,1 +1,74 @@
-<p>register works!</p>
+<!-- Register Sevtion -->
+<section class="register-section py-5">
+   <div class="container">
+      <dialog class="row">
+         <div class="col-lg-6 mx-auto">
+            <!-- Section Header -->
+             <div class="text-center mb-5">
+               <h1 class="display-4 fw-bold text-primary mb-3">Daftar akun</h1>
+               <p class="lead text-muted">Bergabunglah dengan Griya MDP</p>
+             </div>
+
+             <!-- Register Form Card -->
+              <div class="card shadow-lg border-0">
+               <div class="card-body p-4 p-md-5">
+                  <!-- Form akan Berada disini -->
+                   <form [formGroup]="registerForm" (ngSubmit)="submitRegister()">
+                     <!-- Form fields -->
+                      <div class="mb-4">
+                        <label for="name" class="form-label fw-semibold">
+                           <i class="bi bi-person-fill me-2"></i>Nama Lengkap
+                        </label>
+                        <input 
+                           type="text"
+                           class="form-control form-control-lg"
+                           id="name"
+                           formControlName="name"
+                           [class.is-invalid]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+                           placeholder="Masukan nama lengkap Anda"
+                           required>
+                        <div class="invalid-feedback" *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+                           <div *ngIf="registerForm.get('name')?.errors?.['required']">
+                              Nama harus diisi
+                           </div>
+                           <div *ngIf="registerForm.get('name')?.errors?.['minLength']">
+                              Nama minimal 2 karakter
+                           </div>
+                        </div>
+                        <div class="form-text" *ngIf="!registerForm.get('name')?.touched || registerForm.get('name')?.valid">
+                           Nama akan digunakan sebagai identitas akun anda
+                        </div>
+                     </div>
+                     <!-- Email Field dengan Email Validator -->
+                     <div class="mb-4">
+                        <label for="email" class="form-label fw-semibold">
+                           <i class="bi bi-envelope-fill me-2"></i>Email
+                        </label>
+                        <input 
+                           type="email"
+                           class="form-control form-control-lg"
+                           id="email"
+                           formCntrolerName="email"
+                           [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+                           placeholder="nama@example.com"
+                           required>
+                        <div class="invalid-feedback" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                           <div *ngIf="registerForm.get('email')?.errors?.['required']">
+                              Email harus diisi
+                           </div>
+                           <div *ngIf="registerForm.get('email')?.errors?.['email']">
+                              format email tidak valid
+                           </div>
+                        </div>
+                        <div class="form-text" *ngIf="!registerForm.get('email')?.touched || registerForm.get('email')?.valid">
+                           Kami Tidak akan membagikan email Anda kepada pihak lain
+                        </div>
+                     </div>
+                     <!-- Password Field -->
+                  </form>
+               </div>
+            </div>
+         </div>
+      </dialog>
+   </div>
+</section>
