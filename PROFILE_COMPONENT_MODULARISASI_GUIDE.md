@@ -1,4 +1,4 @@
-# Modularisasi Profile Component (Angular + Bootstrap 5)
+`# Modularisasi Profile Component (Angular + Bootstrap 5)
 
 Dokumen ini memandu Anda memecah `Profile Component` menjadi komponen-komponen kecil yang reusable, mudah dipelihara, dan siap diintegrasikan dengan backend. Target hasil:
 
@@ -473,4 +473,4 @@ Selamat melakukan refactor! Setelah modularisasi, codebase menjadi lebih bersih,
 
 **Happy Coding! 🚀**
 
-*Dibuat untuk mata kuliah Pemrograman Aplikasi Web II*
+*Dibuat untuk mata kuliah Pemrograman Aplikasi Web II*`

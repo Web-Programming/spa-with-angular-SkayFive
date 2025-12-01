@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, ReactiveFormsModule, Validator, FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormGroup, ReactiveFormsModule, Validators, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-
+import { AuthService } from '../services/auth.service'; // Import servce
 
 @Component({
   selector: 'app-register',
@@ -11,24 +11,77 @@ import { RouterLink } from '@angular/router';
   styleUrl: './register.css',
 })
 export class Register {
-  registerForm: FormGroup;
+  registerForm: FormGroup; // `registerForm` bertipe `FormGroup` untuk mengelola seluruh form
+  showPassword = false;
+  showConfirmPassword = false;
+  isLoading = false;
+  successMessage = '';
+  errorMessage = '';
 
-  constructor(private fb: FormBuilder) {
+  // `fb: FormBuilder` di-inject melalui constructor untuk membuat form
+  constructor(private fb: FormBuilder, private authService: AuthService){
+    // `fb.group()` - Membuat FormGroup dengan object configuration
     this.registerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['',[Validators.required, Validators.minLength(6)]]
-    })
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required]]
+    }, {Validators: this.passwordMatchValidator }); // tambah custom validator
   }
 
-  submitRegister(): void {
-    if(this.registerForm.valid) {
-      const formData = this.registerForm.value;
-      console.log('Form submited', formData);
+  // custom validator untuk password match
+  passwordMatchValidator(control: AbstractControl):
+    ValidationErrors | null {
+      const password = control.get('password');
+      const confirmPassword = control.get('confirmPassword');
+      
+      if(!password || !confirmPassword) {
+        return null;
+      }
+      return password.value === confirmPassword.value ? null : {
+        mismatch: true
+      };
+    }
 
-      // TODO: Kirim data ke Backend API
+  submitRegister(): void{
+    if(this.registerForm.valid){
+      this.isLoading = true;
+      this.errorMessage = '';
+      this.successMessage = '';
+
+      const formData = this.registerForm.value;
+      
+      // Kirim data ke backend API melalui AuthService
+      this.authService.register(formData)
+        .subscribe({
+          next: (response) => {
+            console.log('Registration succesfull', response);
+            this.isLoading = false;
+            this.successMessage = response.message || 
+            'Registrasi berhasil! silahkan login';
+            this.registerForm.reset();
+
+            // Auto hide success message after 5 seconds
+            setTimeout(() => {
+              this,this.successMessage = '';
+            }, 5000);
+          },
+          error: (error) => {
+            console.error('Registration failed', error);
+            this.isLoading = false;
+            this.errorMessage = error.error?.message || 'Registrasi gagal. Silahkan coba lagi';
+
+            // auto hide error message after 5 seconds
+            setTimeout(() => {
+              this.errorMessage = '';
+            }, 5000);
+          }
+        })
+      // TODO: Kirim data ke backend API
       // this.authService.register(formData).subscribe(...)
     } else {
-      console.log('form is not valid');
+      console.log('Form is not valid');
+      this.errorMessage = 'Mohon lengkapi semua field dengan benar';
     }
-  }
+  } 
 }

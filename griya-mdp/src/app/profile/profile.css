@@ -1,0 +1,42 @@
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+}
+
+/* Button animations */
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* Profile picture border animation */
+.rounded-circle {
+  transition: border-color 0.3s ease;
+}
+
+.rounded-circle:hover {
+  border-color: #667eea !important;
+}
+
+/* Tab active indicator */
+.nav-tabs .nav-link.active {
+  border-bottom: 3px solid #667eea;
+}
+
+/* Timeline connector line (optional) */
+.timeline .d-flex::before {
+  content: '';
+  position: absolute;
+  left: 30px;
+  top: 50px;
+  bottom: -30px;
+  width: 2px;
+  background: #e9ecef;
+}

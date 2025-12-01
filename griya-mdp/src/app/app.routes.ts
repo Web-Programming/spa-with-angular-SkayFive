@@ -5,6 +5,7 @@ import { Login } from './login/login';
 import { Register } from './register/register';
 import { Contact } from './contact/contact';
 import { Detail } from './detail/detail'; // <- Import detail Component
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     //Mengatut Halaman Utama
@@ -16,6 +17,7 @@ export const routes: Routes = [
     {
         path: "profile",
         component: Profile,
+        canActivate: [authGuard], // 👈 Tambahkan ini
         // title : "Profile Page"
     },
     {
